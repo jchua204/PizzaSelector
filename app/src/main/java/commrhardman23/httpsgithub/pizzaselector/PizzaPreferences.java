@@ -20,6 +20,7 @@ public class PizzaPreferences extends AppCompatActivity {
     private RadioButton rdobtnCheeseFilled;
     private CheckBox chkboxGarlic;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class PizzaPreferences extends AppCompatActivity {
     }
 
     /**
-     * calculateCost will loop through the topping array, check size of the pizza, and check the
+     * calculateCost willopping arra loop through the ty, check size of the pizza, and check the
      * crust options for the pizza so that the CostCalculator activity can give a full description
      * of costs.
      * @param vw is the button associated with the calculateCost method
@@ -59,10 +60,55 @@ public class PizzaPreferences extends AppCompatActivity {
 
         Intent calculatePizzaCost = new Intent(this, CostCalculator.class);
         boolean[] hasToppings = new boolean[toppings.length];
+        String size ;
+        String crust ;
+        boolean hasGarlic;
+
 
         //insert your code here
 
+        for (int i = 0; i < toppings.length; i++) {
+            if (toppings[i].isChecked()) {
+                hasToppings[i] = true;
+            } else{
+                hasToppings[i] = false;
+            }
+        }
+
+        if (rdobtnSmall.isChecked()) {
+             size = "Small";
+        }else if (rdobtnIndividual.isChecked()){
+             size = "Individual" ;
+        }else if (rdobtnMedium.isChecked()){
+            size = "Medium" ;
+        }else if (rdobtnLarge.isChecked()){
+            size = "Large" ;
+        }else {
+            size = "Extra Large";
+
+        }
+
+        if (rdobtnCheeseFilled.isChecked()){
+        crust = "Cheese Filled";
+
+        }else if (rdobtnThick.isChecked()) {
+        crust = "Thick";
+
+        }else
+            crust = "Thin" ;
+        {
+
+            if (chkboxGarlic.isChecked()) {
+                hasGarlic = true;
+            } else
+                hasGarlic = false;
+        }
+
         calculatePizzaCost.putExtra("TOPPINGS_BOOLEANS", hasToppings);
+        calculatePizzaCost.putExtra("SIZE_SELECTION", size);
+        calculatePizzaCost.putExtra("CRUST_SELECTION", crust);
+        calculatePizzaCost.putExtra("HAS_GARLIC_CRUST",hasGarlic);
+
         startActivityForResult(calculatePizzaCost, 0);
     }
 
